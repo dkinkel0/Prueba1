@@ -1,0 +1,56 @@
+.landing{
+    background:url(../assets/super-smash-bros-ultimate-1000x750-1540991670.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;   /* toma el 100% de la pantalla */
+    background-repeat: no-repeat;
+    display: flex; /* se puede usar flexbox */
+    flex-direction: column; /*  me lo pone en columna, por defecto esta en row */
+    justify-content: flex-start;
+    overflow: hidden; /* quita la barrita del scroll */
+}
+
+h1{
+    flex: 0 0 15%; 
+}
+
+.palanca{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 60%;
+}
+
+a>img{ /* los hijos de a, selector de css combinator */
+    width: 120px;
+    height: 120px;
+}
+
+
+
+/* .center{
+
+    justify-content: center;
+    align-items: center;
+} */
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Degrade
+height: 200px;
+   background-color: #cccccc;
+   background-image: linear-gradient(red, yellow); 
+   */
+
+   /* Colores
+   #211C42
+   077095
+   44ADD0
+   BCE0ED
+   D6ECF6
+    */
