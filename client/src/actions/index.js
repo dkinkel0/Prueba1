@@ -1,23 +1,25 @@
 import axios from 'axios';
 
-export function getAllOneGames(name) {
-    if (name) {
-        return async function (dispatch) {
-            let json = await axios.get(`/videogames?name=${name}`);
-            return dispatch({
-                type: 'GET_ALL_ONE_GAMES',
-                payload: json.data
-            })
-        }
-    } else {
-        return async function (dispatch) {
-            let json = await axios.get(`/videogames`);
-            return dispatch({
-                type: 'GET_ALL_ONE_GAMES',
-                payload: json.data
-            })
-        }
+export function getAllGames() {
+    
+    return async function (dispatch) {
+        let json = await axios.get('/videogames');
+        return dispatch({
+            type: 'GET_ALL_GAMES',
+            payload: json.data
+        })
     }
+}
+
+export function getNameGames(name) {
+
+    return async function (dispatch) {
+        let json = await axios.get(`/videogames?name=${name}`);
+        return dispatch({
+            type: 'GET_NAME_GAMES',
+            payload: json.data
+        })
+    } 
 }
 
 export function getIdGame(id) {
@@ -75,6 +77,23 @@ export function deleteDetails() {
         type: 'DELETE_DETAILS',
     }
 }
+
+// filtros
+
+export function filterGenres(genero) {
+    return {
+        type: 'FILTER_GENRES',
+        payload: genero
+    }
+}
+
+export function filterCreated(by) {
+    return {
+        type: 'FILTER_CREATED',
+        payload: by
+    }
+}
+
 
 
 

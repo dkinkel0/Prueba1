@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllOneGames, deleteGames } from "../actions";
+import { getNameGames, deleteGames } from "../actions";
 
 export default function SearchBar () {
     const dispatch = useDispatch()
@@ -16,7 +16,7 @@ export default function SearchBar () {
     function handleSubmit(e) {
         e.preventDefault(e)
         dispatch(deleteGames())
-        dispatch(getAllOneGames(name))
+        dispatch(getNameGames(name))
         setName("")
     }
 
