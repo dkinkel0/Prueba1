@@ -30,11 +30,7 @@ export default function Home() {
     const indexOfFirstGame = indexOfLastGame - gamesPerPage // indice del primer game
     const currentGames = games.slice(indexOfFirstGame, indexOfLastGame) // corto el arrelgo a los juegos que voy a mostrar por pagina
 
-    // useEffect(() => {
-
-    //     dispatch(getGenres())
-    // }, [dispatch])
-
+    
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
@@ -42,8 +38,7 @@ export default function Home() {
     const handleClick = (e) => {
         e.preventDefault()
         window.location.reload()
-        // dispatch(deleteGames())
-        // dispatch(getAllGames())
+        
     }
 
     const handleSearch = () => {
@@ -97,10 +92,10 @@ export default function Home() {
                 <SearchBar handleSearch={handleSearch}/>
 
                 <div>
-                    <button className={styles.btn} onClick={e => handleClick(e)}>CARGAR NUEVAMENTE</button>
+                    <button className={styles.btn1} onClick={e => handleClick(e)}>CARGAR NUEVAMENTE</button>
                 </div>
                
-                <Link className={styles.btn} to='/addgame'>
+                <Link className={styles.btn2} to='/addgame'>
                     CREAR JUEGO
                 </Link>
                 

@@ -23,9 +23,9 @@ export default function Game({ id, image, name, genres }) {
                         )
                     })}
                 </div>
-                <div>
+                {/* <div>
                     <p className={styles.gameRating} >Ratin </p>
-                </div>
+                </div> */}
             </div>
         </div>
     )

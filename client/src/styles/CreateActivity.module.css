@@ -49,11 +49,25 @@ div {
     position: relative;
 }
 
-.form > div > span {
+.span1 {
     position: absolute;
     top     : 10rem;
-    color   : red
+    color   : red;
+    font-size: 1.5rem;
 }
+
+.span2 {
+    position: absolute;
+    top     : 4rem;
+    color   : red;
+    font-size: 1.5rem;
+}
+
+.span3 {
+    color   : red;
+    font-size: 1.5rem;
+}
+
 
 .nameinput input {
     background-color: rgb(71, 162, 214);
@@ -98,6 +112,7 @@ div {
     text-align      : center;
     color           : #fff;
     padding         : 1em;
+    margin-top: 30px;
 }
 
 .ratinginput label {
@@ -146,7 +161,7 @@ div {
     padding         : 1em;
     height          : 15rem;
     resize          : none;
-    width           : 46rem;
+    width           : 55rem;
     font-size      : 1.5rem;
 }
 
@@ -181,18 +196,18 @@ div {
 }
 
 .gp {
-    display               : flex;
-    flex-wrap          : wrap;
-    gap                   : 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .gp>div {
     display: flex;
 }
 .gp>div>p {
-    font-size         : 1.5rem;
+    font-size: 1.5rem;
 }
 .gp>div>button {
-    width             : 2rem;
+    width: 2rem;
 }
 

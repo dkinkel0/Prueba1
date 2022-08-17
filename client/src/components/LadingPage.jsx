@@ -8,8 +8,7 @@ export default function LadingPage(){
 
     return (
         <div className={s.landing}>
-            {/* <div className={`${s.landing} ${s.otro}`}>  en esta caso del mismo objeto le paso dos propiedades*/}
-            {/* <h1>...Soy LadingPage...</h1> */}
+            
             <h1>Bienvenidos</h1>
             <div className={s.palanca} >
                 <Link to="/home">                    

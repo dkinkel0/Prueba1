@@ -17,14 +17,7 @@ export default function Paginado({ gamesPerPage, N_games, paginado }) {
             
 
         < nav className = { styles.pageNumbers } >
-            {/* <div className={styles.paginado}>
-                {pageNumbers && pageNumbers.map(number => (
-                    <div  key={number} >
-                        <button onClick={() => paginado(number)}>{number}</button>
-                    </div>
-                ))}
-            </div> */}
-            
+           
             <ul className={styles.paginado}>
                 {pageNumbers &&
                     pageNumbers.map(number => (

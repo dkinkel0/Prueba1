@@ -5,10 +5,12 @@ import { getNameGames, deleteGames } from "../actions";
 
 import styles from "../styles/SearchBar.module.css"
 
+import LoaderSearch from './LoaderSearch.jsx'
+
 export default function SearchBar ({handleSearch}) {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
-
+    const [loader, setLoader] = useState(false)
     function handleInputChange(e) {
         e.preventDefault(e)
         setName(e.target.value)
@@ -16,24 +18,34 @@ export default function SearchBar ({handleSearch}) {
     }
 
     function handleSubmit(e) {
+        setLoader(true)
         e.preventDefault(e)
-        //dispatch(deleteGames())
-        dispatch(getNameGames(name))
-        handleSearch()
-        setName("")
-       
+        if(!name.length){
+            alert('Ingrese un nombre')
+            setLoader(false)
+        }else{
+            dispatch(getNameGames(name)).then(() => setLoader(false))
+            handleSearch()
+            setName("")
+        }
     }
 
     return (
-        <div className={styles.searchbar}>
-            <input className={styles.searchbar__input}
-            type = "text"
-            placeholder= "Buscar juego..."
-            value= {name}
-            onChange = {(e) => handleInputChange(e)}
-            />
-            <button className={styles.searchbar__button} type="submit" onClick={e => handleSubmit(e)}>Buscar</button>
-            
+        <div>
+            {loader 
+                    ? <LoaderSearch/>
+                      
+                    : <div className={styles.searchbar}>
+                            <input className={styles.searchbar__input}
+                            type = "text"
+                            placeholder= "Buscar juego..."
+                            value= {name}
+                            onChange = {(e) => handleInputChange(e)}
+                            />
+                            <button className={styles.searchbar__button} type="submit" onClick={e => handleSubmit(e)}>Buscar</button>
+                            
+                        </div>
+            }
         </div>
     )
 }

@@ -20,8 +20,10 @@ export default function CreateActivity() {
     const dispatch = useDispatch()
     const generos = useSelector((state => state.genres))
     const platforms = useSelector((state => state.platforms))
+    const games = useSelector((state => state.allVideoGame))
+
     const history = useHistory()
-    // const estado = useSelector((state => state.estado))
+
     const [input, setInput] = useState({
         image: "",
         name: "",
@@ -45,14 +47,16 @@ export default function CreateActivity() {
         if (!input.name || !input.genres.length || !input.platforms.length || !input.description || !input.released || !input.rating) {
             return alert('Flatan completar campos')
         }
-
+        if(games.find( el => el.name.toLowerCase() === input.name.toLowerCase())){
+           return alert('EL nombre ya existe')
+        }
         dispatch(createGame(input));
 
-        return alert('Juego creado');  // en esta alerta tendria que poner el error que viene del back
+        alert('Juego creado');  // en esta alerta tendria que poner el error que viene del back
 
         // Para volver a la pantalla principal
         history.push('/home')
-        // Reseteamos el input
+        
     }
 
     function handleChange(e) { // name, image, description, released
@@ -151,7 +155,7 @@ export default function CreateActivity() {
                 <div className={styles.nameinput} >
                     <label>Nombre:   </label>
                     <input type='text' value={input.name} name='name' autoComplete='off' onChange={e => handleChange(e)} />
-                    {error.name && <span>  {error.name}</span>}
+                    {error.name && <span className={styles.span1} >  {error.name}</span>}
                 </div>
 
                 <div className={styles.releasedinput} >
@@ -162,13 +166,13 @@ export default function CreateActivity() {
                         value={input.released}
                         onChange={(e) => handleChange(e)}
                     />
-                    {error.released && <span>  {error.released}</span>}
+                    {error.released && <span className={styles.span1} >  {error.released}</span>}
                 </div>
 
                 <div className={styles.imageinput} >
                     <label>Imagen:   </label>
                     <input type='text' placeholder="Opcional..." value={input.image} name='image' onChange={e => handleChange(e)} />
-                    {error.image && <span>  {error.image}</span>}
+                    {error.image && <span className={styles.span1} >{error.image}</span>}
                 </div>
 
                 <div className={styles.ratinginput}>
@@ -188,7 +192,7 @@ export default function CreateActivity() {
                     <label>
                         <input type="radio" value='5' name='rating' onChange={(e) => handleCheck(e)} />
                         5</label>
-                    {error.rating && <span>  {error.rating}</span>}
+                    {error.rating && <span className={styles.span2} >{error.rating}</span>}
                 </div>
 
                 <div className={styles.genresinput} >
@@ -199,7 +203,7 @@ export default function CreateActivity() {
                             <option value={genre.name} key={i}>{genre.name}</option>
                         ))}
                     </select>
-                    {error.genres && <span>  {error.genres}</span>}
+                    {error.genres && <span className={styles.span1} >  {error.genres}</span>}
                     <div className={styles.gp} >
                         {genresIn.map((genre, i) =>
                             <div key={i}>
@@ -218,7 +222,7 @@ export default function CreateActivity() {
                             <option value={p} key={i}>{p}</option>
                         ))}
                     </select>
-                    {error.platforms && <span>  {error.platforms}</span>}
+                    {error.platforms && <span className={styles.span1} >{error.platforms}</span>}
                     <div className={styles.gp} >
                         {input.platforms.map((p, i) =>
                             <div key={i}>
@@ -241,7 +245,7 @@ export default function CreateActivity() {
                         // required 
                         onChange={e => handleChange(e)}
                     />
-                    {error.description && <span>  {error.description}</span>}
+                    {error.description && <span className={styles.span3} >{error.description}</span>}
                 </div>
                 
                 <div className={styles.btncrear} >

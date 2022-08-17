@@ -11,6 +11,7 @@ export function getAllGames() {
     }
 }
 
+
 export function getNameGames(name) {
 
     return async function (dispatch) {

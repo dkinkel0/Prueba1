@@ -23,7 +23,7 @@
     padding: 1em 0 0 0;
 }
 
-.btn{
+.btn1{
     color: #fff !important;
     font-size: 1.5rem;
     font-weight: 500;
@@ -35,6 +35,24 @@
     text-decoration: none;
     border-radius: 10px;
     width: 20rem;
+    height: 5rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn2{
+    color: #fff !important;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 1em 0.5em;
+    background: rgb(71, 162, 214);
+    border: 2px solid;
+    border-color: rgb(203, 233, 233);
+    position: relative;
+    text-decoration: none;
+    border-radius: 10px;
+    width: 20rem;
+    height: 5rem;
     cursor: pointer;
     text-align: center;
 }
