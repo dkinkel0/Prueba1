@@ -1,10 +1,4 @@
-.gamesGrid{
-    display: grid;
-    grid-template-columns: repeat(3, 270px);
-    gap: 120px;
-    padding: 40px;
-    justify-content: center;
-}
+
 
 .titleContainer{
     background-color: #BCE0ED;

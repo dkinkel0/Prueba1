@@ -1,0 +1,65 @@
+.game{
+    display: flex;
+    border: 1px solid rgb(203, 233, 233);
+    background-color:rgb(71, 162, 214);
+    color: rgb(85, 136, 232);
+    padding: 1em;
+    border-radius: 20px;
+    text-align: center;
+    
+}
+
+.gameImage{
+    flex: 0 0 60%;
+    object-fit   : cover; /* la imagen mantiene su relación de aspecto */
+    border-radius: 10px; 
+    width        : 100%;
+    height       : 30rem; /* ese dato es oro se fija en los 10px de base por ende 300px */
+}
+
+
+.gameInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 0 40%;
+    color: white;
+    gap: 10px;
+}
+
+.gameInfo > a {
+    color: white;
+    font-size: 2.1rem;
+}
+
+.gameInfo > div > span {
+    display: block;
+    /* color: white; */
+    font-size: 1.8rem;
+}
+
+.gameRating{
+    font-size: 1.8rem;
+}
+
+
+.game:hover{
+   /*  opacity: 0.8;
+    background-color: #D6ECF6;
+    outline: none;
+    border: 1px solid #211C42;
+    box-shadow: 0 0 10px #211C42;
+    border-radius: 20px; */
+}
+
+.aux {
+    border: 1px solid rgb(203, 233, 233);
+    background-color:rgb(71, 162, 214);
+    color: rgb(85, 136, 232);
+    display: inline-block;
+    padding: 1em;
+    border-radius: 15px;
+    text-align: center;
+}
+
+

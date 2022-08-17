@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getAllGames() {
-    
+
     return async function (dispatch) {
         let json = await axios.get('/videogames');
         return dispatch({
@@ -14,12 +14,22 @@ export function getAllGames() {
 export function getNameGames(name) {
 
     return async function (dispatch) {
-        let json = await axios.get(`/videogames?name=${name}`);
-        return dispatch({
-            type: 'GET_NAME_GAMES',
-            payload: json.data
-        })
-    } 
+        try {
+            let json = await axios.get(`/videogames?name=${name}`);
+            console.log(json.data)
+            return dispatch({
+                type: 'GET_NAME_GAMES',
+                payload: json.data
+            })
+
+        } catch (error) {
+            console.log(error)
+            return dispatch({
+                type: 'GET_NAME_GAMES',
+                payload: []
+            })
+        }
+    }
 }
 
 export function getIdGame(id) {
@@ -56,13 +66,35 @@ export function getPlatforms() {
 }
 
 export function createGame(input) {
-   
+
     return async function (dispatch) {
-        let json = await axios.post('/videogames', input);
-        return dispatch({
-            type: 'CREATE_GAME',
-            payload: json.data
-        })
+        try {
+            if (input.image.length) {
+                let json = await axios.post('/videogames', input);
+                return dispatch({
+                    type: 'CREATE_GAME',
+                    payload: json.data
+                })
+            } else {
+                let not_image = {
+                    name: input.name,
+                    genres: input.genres,
+                    description: input.description,
+                    released: input.released,
+                    rating: input.rating,
+                    platforms: input.platforms
+                }
+                let json = await axios.post('/videogames', not_image);
+                return dispatch({
+                    type: 'CREATE_GAME',
+                    payload: json.data
+                })
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
 
@@ -93,6 +125,35 @@ export function filterCreated(by) {
         payload: by
     }
 }
+
+export function filterAlphabet(order) {
+    return {
+        type: 'FILTER_ALPHABET',
+        payload: order
+    }
+}
+
+export function filterRating(rating) {
+    return {
+        type: 'FILTER_RATING',
+        payload: rating
+    }
+}
+
+export function filterOrder(order) {
+    if (order === 'az' || order === 'za') {
+        return {
+            type: 'FILTER_ALPHABET',
+            payload: order
+        }
+    } else {
+        return {
+            type: 'FILTER_RATING',
+            payload: order
+        }
+    }
+}
+
 
 
 

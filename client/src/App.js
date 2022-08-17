@@ -1,13 +1,14 @@
-import './App.css';
+//import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import LadingPage from './components/LadingPage.jsx'
 import Home from './components/Home.jsx'
 import GameDetail from './components/GameDetail.jsx'
 import CreateGame from './components/CreateGame.jsx'
+import './reset.css'
 
 function App() {
   return (
-    <div className="App">
+    <div >
       {/* <h1>...Soy App...</h1> */}
       <Switch>
         <Route exact path='/' component={LadingPage}/>

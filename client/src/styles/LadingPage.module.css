@@ -11,28 +11,28 @@
 }
 
 h1{
-    flex: 0 0 15%; 
+    text-align: center;
+    font-size: 8rem;
+    color: rgb(71, 162, 214);
+    margin-top: 34rem;
+    
 }
 
 .palanca{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 60%;
+    padding-right: 5rem;    
+    
 }
 
 a>img{ /* los hijos de a, selector de css combinator */
     width: 120px;
-    height: 120px;
+    height: 140px;
 }
 
 
 
-/* .center{
-
-    justify-content: center;
-    align-items: center;
-} */
 
 .center{
     display: flex;
@@ -40,17 +40,3 @@ a>img{ /* los hijos de a, selector de css combinator */
     justify-content: center;
     padding: 20px;
 }
-
-/* Degrade
-height: 200px;
-   background-color: #cccccc;
-   background-image: linear-gradient(red, yellow); 
-   */
-
-   /* Colores
-   #211C42
-   077095
-   44ADD0
-   BCE0ED
-   D6ECF6
-    */

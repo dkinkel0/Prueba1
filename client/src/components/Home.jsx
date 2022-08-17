@@ -1,115 +1,125 @@
 import { useEffect, useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllGames, deleteGames, getGenres, filterGenres, filterCreated } from '../actions'
-import mario from "../assets/mario-dance.gif"
+import { getAllGames, deleteGames, getGenres, filterGenres, filterCreated, filterOrder } from '../actions'
 import { Link } from 'react-router-dom'
+import styles from '../styles/Home.module.css'
 
-import styles from './Home.module.css'
+
 
 import SearchBar from './SearchBar'
 import Paginado from './Paginado.jsx'
-import Game from "./Game.jsx"
+import Videogames from './Videogames.jsx'
+import Filtros from './Filtros.jsx'
 
 
-
-export default function Home(){
+export default function Home() {
     //esto se usa para no usar el connect, ni hacer mapStateToProps ni mapDispatchToProps
     const dispatch = useDispatch()  // la constante es dispatch es la ejecucion del useDispatch
 
     const games = useSelector((state) => state.videoGames) // accedo a la parte del estado q quiero
-    const generos = useSelector((state) => state.genres)
-    
-    const [bandera, setBandera] = useState("")
+
+
+    const [bandera, setBandera] = useState(true) // ordenamiento
+
+    const [habgen, setHabgen] = useState(false) // renderizado condicionado de filtro
+    const [habsrc, setHabsrc] = useState(false) // renderizado condicionado de filtro
 
     const [currentPage, setCurrentPage] = useState(1) // pagina actual
     const [gamesPerPage] = useState(15)   // cantidad de juegos por pagina
     const indexOfLastGame = currentPage * gamesPerPage  // indice del ultimo game
     const indexOfFirstGame = indexOfLastGame - gamesPerPage // indice del primer game
     const currentGames = games.slice(indexOfFirstGame, indexOfLastGame) // corto el arrelgo a los juegos que voy a mostrar por pagina
-    
-    useEffect(() => {
-        dispatch(getAllGames())
-        dispatch(getGenres())
-    }, [dispatch])
-    
+
+    // useEffect(() => {
+
+    //     dispatch(getGenres())
+    // }, [dispatch])
+
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
-    
+
     const handleClick = (e) => {
         e.preventDefault()
-        dispatch(deleteGames())
-        dispatch(getAllGames())
+        window.location.reload()
+        // dispatch(deleteGames())
+        // dispatch(getAllGames())
     }
 
+    const handleSearch = () => {
+        setCurrentPage(1)
+    }
+
+    //-- Filtros ----------------------------------
     const handleGenres = (e) => {
         e.preventDefault()
-        if(e.target.value !== 'select'){
+        if (e.target.value !== 'select') {
             dispatch(filterGenres(e.target.value))
             setCurrentPage(1)
-            setBandera(e.target.value)
+
         }
     }
     const handleCreated = (e) => {
         e.preventDefault()
-        if(e.target.value !== 'select'){
+        if (e.target.value !== 'select') {
             dispatch(filterCreated(e.target.value))
             setCurrentPage(1)
-            setBandera(e.target.value)
+
         }
     }
 
-    // [ ] Botones/Opciones para filtrar por género y por videojuego existente o agregado por nosotros
-    // [ ] Botones/Opciones para ordenar tanto ascendentemente como descendentemente los videojuegos por orden alfabético y por rating
+    const handleSelect = (e) => {
+        e.preventDefault()
+        if (e.target.value !== 'select') {
+            if (e.target.value === 'genero') {
+                setHabgen(true)
+                setHabsrc(false)
+            } else {
+                setHabsrc(true)
+                setHabgen(false)
+            }
+        }
+    }
+
+    const handleOrder = (e) => {
+        e.preventDefault()
+        if (e.target.value !== 'select') {
+            dispatch(filterOrder(e.target.value))
+            setCurrentPage(1)
+            setBandera(!bandera)
+        }
+    }
 
     return (
-        <div>
-            {/* <h1>...Soy en Home...</h1> */}
-            <SearchBar/>
-            <br></br>
-            <div>
-                <button onClick={e => handleClick(e)}>CARGAR NUEVAMENTE</button>
-            </div>
-            <br></br>
-            <Link to='/addgame'>
-                <button>CREAR JUEGO</button>
-            </Link>
-            <br></br>
-            <br></br>
+        <div className={styles.home}>
+            <div className={styles.barra}>
 
-            <div>Filtrar por:</div>
-            <div>
-                <label>Genero:   </label>
-                <select  defaultValue={"select"} onChange={ (e) => handleGenres(e) }>
-                            {/* <option selected disabled hidden>Seleccionar...</option> */}
-                            <option value="select">Seleccionar...</option>
-                    {generos?.map((g, i) => 
-                            <option value={g.name} key={i}>{g.name}</option>
-                        )}
+                <SearchBar handleSearch={handleSearch}/>
 
-                </select>
+                <div>
+                    <button className={styles.btn} onClick={e => handleClick(e)}>CARGAR NUEVAMENTE</button>
+                </div>
+               
+                <Link className={styles.btn} to='/addgame'>
+                    CREAR JUEGO
+                </Link>
+                
             </div>
-            <div>
-                <label>Api o creados:   </label>
-                <select onChange={ (e) => handleCreated(e) }>
-                            <option value="select">Seleccionar...</option>
-                            {/* <option selected disabled hidden>Seleccionar...</option> */}
-                            <option value="api">API</option>
-                            <option value="created">Creado</option>
-                </select>
-            </div>
+
             <br></br>
+            <Filtros
+                handleSelect={handleSelect}
+                handleGenres={handleGenres}
+                handleCreated={handleCreated}
+                handleOrder={handleOrder}
+                habgen={habgen}
+                habsrc={habsrc}
+            />
 
-            <Paginado gamesPerPage = {gamesPerPage} N_games={games.length} paginado={paginado}/>
-            <div className={styles.gamesGrid}>
-                {currentGames.length ? currentGames.map(c => {
-                    return (
-                        <Fragment key={c.id}>
-                            <Game  id={c.id} image={c.image} name={c.name} genres={c.genres}  />     
-                        </Fragment>
-                    )
-                }) : <img className={styles.imageLoading} src={mario} alt="not found"/>}
-            </div>    
+
+            <Paginado gamesPerPage={gamesPerPage} N_games={games.length} paginado={paginado} />
+            <Videogames currentGames={currentGames} />
+
         </div>
     )
 }

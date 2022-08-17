@@ -60,9 +60,9 @@ export const validate = (input) => {
         error.released = 'Debes ingresar una fecha de lanzamiento'
     }else if(anio < currentA){
         error.released = 'No puede ser menor que año en curso'
-    } else if(anio == currentA && mes < currentM){
+    } else if(anio === currentA && mes < currentM){
         error.released = 'No puede ser menor que el mes en curso'
-    } else if(anio == currentA && mes == currentM && dia < currentD){
+    } else if(anio === currentA && mes === currentM && dia < currentD){
         error.released = 'No puede ser menor que el dia en curso'
     }
     

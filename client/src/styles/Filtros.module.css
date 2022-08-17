@@ -1,0 +1,28 @@
+
+.filters {
+    display        : flex;
+    justify-content: center;
+    
+}
+
+.filters > div {
+    margin: 10px;
+}
+
+.filters select {
+    background-color: rgb(71, 162, 214);
+    color           : #fff;
+    padding         : 1em;
+    border-radius   : 10px;
+    width           : 20rem;
+    cursor          : pointer;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.filters__label {
+    color           : #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 10px;
+}

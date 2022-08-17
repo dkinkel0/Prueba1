@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createGame, getGenres, getPlatforms } from '../actions'
 import { useDispatch, useSelector } from "react-redux";
+import styles from "../styles/CreateActivity.module.css"
 
 import { validate } from "../util/index.js"
 
@@ -19,8 +20,8 @@ export default function CreateActivity() {
     const dispatch = useDispatch()
     const generos = useSelector((state => state.genres))
     const platforms = useSelector((state => state.platforms))
-    //const history = useHistory()
-    
+    const history = useHistory()
+    // const estado = useSelector((state => state.estado))
     const [input, setInput] = useState({
         image: "",
         name: "",
@@ -41,14 +42,16 @@ export default function CreateActivity() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if(!input.name || !input.genres.length || !input.platforms.length || !input.description || !input.released || !input.rating){
-            alert('Flatan completar campos')
+        if (!input.name || !input.genres.length || !input.platforms.length || !input.description || !input.released || !input.rating) {
+            return alert('Flatan completar campos')
         }
-       
+
         dispatch(createGame(input));
-        alert('Juego creado');
+
+        return alert('Juego creado');  // en esta alerta tendria que poner el error que viene del back
+
         // Para volver a la pantalla principal
-        //history.push('/home')
+        history.push('/home')
         // Reseteamos el input
     }
 
@@ -63,9 +66,9 @@ export default function CreateActivity() {
             [e.target.name]: e.target.value
         }))
     }
-    
+
     function handleSelectPlataform(e) {
-        
+
         if (!input.platforms.includes(e.target.value) && e.target.value !== 'select') {
             setInput({
                 ...input,
@@ -76,11 +79,11 @@ export default function CreateActivity() {
                 platforms: [...input.platforms, e.target.value]
             }))
         }
-        
+
     }
 
     function handleSelectGenres(e) {
-        
+
         if (!genresIn.includes(e.target.value) && e.target.value !== 'select') {
             setGenresIn(
                 [...genresIn, e.target.value]  // [action, shoter]
@@ -98,7 +101,7 @@ export default function CreateActivity() {
 
 
     const handleCheck = (e) => { // rating
-        if(e.target.checked) {
+        if (e.target.checked) {
             setInput({
                 ...input,
                 [e.target.name]: e.target.value
@@ -116,7 +119,7 @@ export default function CreateActivity() {
         )
         setInput({
             ...input,
-            genres: input.genres.filter(g => g !== generos.find(g => g.name === genre).id) 
+            genres: input.genres.filter(g => g !== generos.find(g => g.name === genre).id)
         })
         setError(validate({
             ...input,
@@ -137,60 +140,21 @@ export default function CreateActivity() {
     }
 
     return (
-        <div>
-            <br></br>
-            <Link to='/home'>
-                <button>Volver</button>
-            </Link>
-            <br></br>
-            <br></br>
-            <form onSubmit={(e) => handleSubmit(e)}>
+        <div className={styles.container} >
 
-                <div>
+            <Link className={styles.btnvolver} to='/home'>
+                Volver
+            </Link>
+
+            <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+
+                <div className={styles.nameinput} >
                     <label>Nombre:   </label>
-                    <input type='text' value={input.name} name='name' autoComplete = 'off' onChange={e => handleChange(e)} />
+                    <input type='text' value={input.name} name='name' autoComplete='off' onChange={e => handleChange(e)} />
                     {error.name && <span>  {error.name}</span>}
                 </div>
-                <br></br>
 
-
-                <div>
-                    <label>Imagen:   </label>
-                    <input type='text' placeholder="Opcional..." value={input.image} name='image' onChange={e => handleChange(e)} />
-                    {error.image && <span>  {error.image}</span>}
-                </div>
-                <br></br>
-
-                <div>
-                    <label>Genero:   </label>
-                    <div>
-                        <select onChange={(e) => handleSelectGenres(e)} >
-                                <option value="select">Seleccionar...</option>
-                            {generos.map((genre, i) => (
-                                <option value={genre.name} key={i}>{genre.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    {error.genres && <span>  {error.genres}</span>}
-                </div>
-                <br></br>
-                {genresIn.map((genre, i) =>
-                    <p key={i}>
-                        {genre}
-                        <button type='button' onClick={() => handleDeleteGenres(genre)}>X</button>
-                    </p>
-
-                )}
-                <br></br>
-                
-                <div>
-                    <label>Descripción:   </label>
-                    <input type='text' placeholder="Hasta 3mil caracteres" value={input.description} name='description' onChange={e => handleChange(e)} />
-                    {error.description && <span>  {error.description}</span>}
-                </div>
-                <br></br>
-
-                <div>
+                <div className={styles.releasedinput} >
                     <label>Fecha de lanzamiento: </label>
                     <input
                         type='date'
@@ -198,52 +162,90 @@ export default function CreateActivity() {
                         value={input.released}
                         onChange={(e) => handleChange(e)}
                     />
-                    {error.released && <span>  {error.released}</span>} 
+                    {error.released && <span>  {error.released}</span>}
                 </div>
-                <br></br>
 
-                <div>
+                <div className={styles.imageinput} >
+                    <label>Imagen:   </label>
+                    <input type='text' placeholder="Opcional..." value={input.image} name='image' onChange={e => handleChange(e)} />
+                    {error.image && <span>  {error.image}</span>}
+                </div>
+
+                <div className={styles.ratinginput}>
                     <label>Rating: </label>
                     <label>
-                            <input type="radio" value='1' name='rating' onChange={(e) => handleCheck(e)} />
+                        <input type="radio" value='1' name='rating' onChange={(e) => handleCheck(e)} />
                         1</label>
                     <label>
-                            <input type="radio" value='2' name='rating' onChange={(e) => handleCheck(e)} />
+                        <input type="radio" value='2' name='rating' onChange={(e) => handleCheck(e)} />
                         2</label>
                     <label>
-                            <input type="radio" value='3' name='rating' onChange={(e) => handleCheck(e)} />
+                        <input type="radio" value='3' name='rating' onChange={(e) => handleCheck(e)} />
                         3</label>
                     <label>
-                            <input type="radio" value='4' name='rating' onChange={(e) => handleCheck(e)} />
-                        4</label>    
+                        <input type="radio" value='4' name='rating' onChange={(e) => handleCheck(e)} />
+                        4</label>
                     <label>
-                            <input type="radio" value='5' name='rating' onChange={(e) => handleCheck(e)} />
-                        5</label>  
-                    {error.rating && <span>  {error.rating}</span>}      
+                        <input type="radio" value='5' name='rating' onChange={(e) => handleCheck(e)} />
+                        5</label>
+                    {error.rating && <span>  {error.rating}</span>}
                 </div>
-                <br></br>
 
-                <div>
-                    <label>Plataformas:    </label>
-                    <div>
-                        <select onChange={e => handleSelectPlataform(e)}>
-                                <option value='select'>Seleccionar...</option>
-                            {platforms.map((p, i) => (
-                                <option value={p} key={i}>{p}</option>
-                            ))}    
-                        </select>
+                <div className={styles.genresinput} >
+                    <label>Genero:   </label>
+                    <select onChange={(e) => handleSelectGenres(e)} >
+                        <option value="select">Seleccionar...</option>
+                        {generos.map((genre, i) => (
+                            <option value={genre.name} key={i}>{genre.name}</option>
+                        ))}
+                    </select>
+                    {error.genres && <span>  {error.genres}</span>}
+                    <div className={styles.gp} >
+                        {genresIn.map((genre, i) =>
+                            <div key={i}>
+                                <p>{genre}</p>
+                                <button type='button' onClick={() => handleDeleteGenres(genre)}>X</button>
+                            </div>
+                        )}
                     </div>
-                    {error.platforms && <span>  {error.platforms}</span>}
                 </div>
-                <br></br>
-                {input.platforms.map((p,i) => 
-                    <p key={i}>{p}
-                        <button onClick={() => deltePlatforms(p) }>X</button>
-                    </p>
-                )}
 
-                <div>
-                    <button type='submit' >Crear actividad</button>
+                <div className={styles.platforminput} >
+                    <label>Plataformas:    </label>
+                    <select onChange={e => handleSelectPlataform(e)}>
+                        <option value='select'>Seleccionar...</option>
+                        {platforms.map((p, i) => (
+                            <option value={p} key={i}>{p}</option>
+                        ))}
+                    </select>
+                    {error.platforms && <span>  {error.platforms}</span>}
+                    <div className={styles.gp} >
+                        {input.platforms.map((p, i) =>
+                            <div key={i}>
+                                <p>{p}</p>
+                                <button type="button" onClick={() => deltePlatforms(p)}>X</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className={styles.descriptioninput} >
+                    <label>Descripción:   </label>
+                    <textarea
+                        placeholder="Hasta 3 mil caracteres"
+                        rows="10"
+                        cols="50"
+                        type="text"
+                        value={input.description}
+                        name="description"
+                        // required 
+                        onChange={e => handleChange(e)}
+                    />
+                    {error.description && <span>  {error.description}</span>}
+                </div>
+                
+                <div className={styles.btncrear} >
+                    <button className={styles.crearjuego} type='submit' >Crear actividad</button>
                 </div>
 
             </form>

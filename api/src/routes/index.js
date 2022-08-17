@@ -38,7 +38,7 @@ const getApiInfo = async () => {
             genres: juego.genres.map(g => g.name),
             // description: 'Not description',
             // released: juego.released,
-            // rating: juego.rating,
+            rating: juego.rating,
             platforms: juego.platforms.map(ob => ob.platform.name) 
               
         }
@@ -67,7 +67,7 @@ const getdbInfo = async () => {
             genres: game.genres.map(el => el.name),
             // description: game.description,
             // released: game.released,
-            // rating: game.rating,
+            rating: game.rating,
             // platforms: game.platforms   
         }
     })
@@ -116,89 +116,94 @@ const addAllGenres = async () => {
 //--------routes-----------------------------------------------------------------------
 
 //-- MOSTRAR JUEGOS Me traigo los juegos de la API y de la DB
-router.get('/videogames', async (req, res) => {
+router.get('/videogames', async (req, res, next) => {
     try {
         const { name } = req.query;
         //console.log(name)
         const games = await getAllApiDbInfo()
         if(name){
             const gamesName = games.filter(g => g.name.toLowerCase().includes(name.toLowerCase())).slice(0,15)
-            gamesName.length ? res.status(200).json(gamesName) : res.status(404).send('NO hay coincidencia con el nombre ingresado')
+            gamesName.length ? res.status(200).json(gamesName) : res.status(404).json({error: 'Not found'})
         }else{
             res.status(200).json(games)
         }
 
     } catch (error) {
-        res.send(error) 
+        next(error) 
     }
 })
 
 //-- Busqueda por ID ------------------------------------------------------------------
-router.get('/videogame/:idVideogame', async (req, res) => {
+router.get('/videogame/:idVideogame', async (req, res, next) => {
 
     const {idVideogame} = req.params;
-
-    if (isNaN(idVideogame)) {  // esto da true si es un uuid, en realidad mira si no es un numero
-        const game = await Videogame.findOne({
-            where: {
-                id: idVideogame           // si el id es igual al que me pasan por params
-            },
-            include: {
-                model: Genre,
-                attributes: ['name'],
-                through: {
-                    attributes: []
-                }
-            },
-        })
-        const juego =  {
-                        id: game.id,
-                        image: game.image,
-                        name: game.name,
-                        // ...game,
-                        genres: game.genres.map(el => el.name),
-                        description: game.description,
-                        released: game.released,
-                        rating: game.rating,
-                        platforms: game.platforms   
-                      }
+    try {
         
-
-         juego ? res.status(200).json(juego) : res.status(404).send('No hay juegos con ese ID')
-    }else{
-        console.log("aca estoy")
-        const juego = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`)
-        
-        const game = {
-            id: juego.data.id,
-            image: juego.data.background_image,
-            name: juego.data.name,
-            genres: juego.data.genres.map(g => g.name),
-            description: juego.data.description_raw,
-            released: juego.data.released,
-            rating: juego.data.rating,
-            platforms: juego.data.platforms.map(ob => ob.platform.name)              
+        if (isNaN(idVideogame)) {  // esto da true si es un uuid, en realidad mira si no es un numero
+            const game = await Videogame.findOne({
+                where: {
+                    id: idVideogame           // si el id es igual al que me pasan por params
+                },
+                include: {
+                    model: Genre,
+                    attributes: ['name'],
+                    through: {
+                        attributes: []
+                    }
+                },
+            })
+            const juego =  {
+                            id: game.id,
+                            image: game.image,
+                            name: game.name,
+                            // ...game,
+                            genres: game.genres.map(el => el.name),
+                            description: game.description,
+                            released: game.released,
+                            rating: game.rating,
+                            platforms: game.platforms   
+                          }
+            
+    
+             Object.keys(juego).length ? res.status(200).json(juego) : res.status(404).send('Not Found')
+        }else{
+            //console.log("aca estoy")
+            const juego = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`)
+            
+            const game = {
+                id: juego.data.id,
+                image: juego.data.background_image,
+                name: juego.data.name,
+                genres: juego.data.genres.map(g => g.name),
+                description: juego.data.description_raw,
+                released: juego.data.released,
+                rating: juego.data.rating,
+                platforms: juego.data.platforms.map(ob => ob.platform.name)              
+            }
+            
+            Object.keys(game).length ? res.status(200).json(game) : res.status(404).send('Not Found')
         }
-        
-        res.send(game)
+    } catch (error) {
+        next(error)
     }
 })
 
 //--POST Agregar juego a la DB
 router.post('/videogames', async (req, res) => {
+        //console.log(req.body)
     try {
         const {image, name, genres, description, released, rating, platforms} = req.body;
         const [newGame, estado] = await Videogame.findOrCreate({
             where: {                               // el where son los valores por los cuales quiero encontrar la actividad             
                 name, 
               },
-              defaults: {                            // si no encuentra  y la crea lo hace con los valores del defaults
+              defaults: {                            // si no encuentra... la crea lo hace con los valores del defaults
                 name, image, description, released, rating, platforms
               }
         })
 
         // [action, shoter]
-          const Idgenres = Genre.fidAall
+        // const Idgenres = Genre.fidAall
 
         newGame.addGenre(genres)
                         // [1,2]
@@ -207,8 +212,11 @@ router.post('/videogames', async (req, res) => {
 
         //res.send(`Actividad creada: ${JSON.stringify(newGame)} estado: ${estado}`)
         res.send(estado)
-    } catch (error) {
-        res.send(error)
+        //res.status(200).json({msj: estado})
+    } catch (er) {
+        //console.log(er.parent)
+        res.send(er)
+        //res.status(404).json({error: er.message})
     }
 
 })

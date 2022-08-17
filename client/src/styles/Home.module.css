@@ -1,0 +1,40 @@
+
+.home{
+    /* background-color: #81b2c9; */
+    /* height: 520vh; */
+    /* text-align-last: center;
+    align-items    : center;
+    font-size      : 1.4rem;
+    height         : 100rem;
+    position       : relative;
+    display        : flex;
+    flex-direction : column;
+    gap            : 40px;
+    width          : 85%;
+    margin         : 0 auto; */
+    
+}
+
+.barra{
+    display        : flex; /* El contenedor flexible se vuelve flexible al establecer la displaypropiedad en flex: */
+    justify-content: center; /* El centervalor alinea los elementos flexibles en el centro del contenedor: */
+    height: auto;
+    gap: 50px;
+    padding: 1em 0 0 0;
+}
+
+.btn{
+    color: #fff !important;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 1em 0.5em;
+    background: rgb(71, 162, 214);
+    border: 2px solid;
+    border-color: rgb(203, 233, 233);
+    position: relative;
+    text-decoration: none;
+    border-radius: 10px;
+    width: 20rem;
+    cursor: pointer;
+    text-align: center;
+}

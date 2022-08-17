@@ -1,0 +1,80 @@
+.link {
+    color: #fff ;
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 1em 0.5em;
+    background: rgb(71, 162, 214);
+    border: 2px solid;
+    border-color: rgb(203, 233, 233);
+    position: relative;
+    text-decoration: none;
+    border-radius: 10px;
+    width: 20rem;
+    cursor: pointer;
+    text-align: center;
+    
+    
+}
+
+
+.game{
+    display: flex;
+    border: 1px solid rgb(203, 233, 233);
+    background-color:rgb(71, 162, 214);
+    color: rgb(85, 136, 232);
+    padding: 1em;
+    border-radius: 20px;
+    text-align: center;
+    height : 100%;
+}
+
+.gameImage{
+    flex: 0 0 60%;
+    object-fit   : cover; /* la imagen mantiene su relación de aspecto */
+    border-radius: 10px; 
+    width: 100%;
+    height : 100%; 
+}
+
+.gameInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 0 40%;
+    color: white;
+    gap: 10px;
+}
+
+.gameInfo > h2 {
+    font-size: 4rem;
+}
+
+.gameInfo > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.gameInfo > div > span {
+    font-size: 3rem;
+}
+
+.description {
+    font-size: 2rem;
+    text-align: justify ;
+    padding-left: 1rem;
+    
+}
+
+.info{
+    font-size: 2rem;
+}
+
+.mario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30rem;
+    margin-top: 15rem;
+}

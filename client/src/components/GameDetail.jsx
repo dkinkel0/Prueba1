@@ -3,59 +3,65 @@ import { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdGame, deleteDetails } from '../actions';
 import { Link } from 'react-router-dom';
-
+import styles from '../styles/GameDetail.module.css'
 import { useParams } from "react-router-dom"
 
 import mario from "../assets/mario-dance.gif"
 
 
+
 export default function GameDetail() {
     const { id } = useParams()
-    console.log(id)
+    //console.log(id)
     const dispatch = useDispatch()
     const detail = useSelector(state => state.detailGame)
 
     useEffect(() => {
         dispatch(getIdGame(id))
-    
-      return () => {
-        dispatch(deleteDetails())
-      }
+
+        return () => {
+            dispatch(deleteDetails())
+        }
     }, [dispatch, id])
-    
+
     //console.log(detail)
 
     return (
-        <div>
-            <h3>Soy GameDeatil</h3>
-            <Link to={'/home'}>Volver al Home</Link>
-            
+        <div >
+
+
+            <Link  className={styles.link} to={'/home'}>Volver al Home</Link>
+
             {detail.length ?
-                
-                <div>
-                    <img src={detail[0].image} alt='img not found' width='160px' height='100px' />
-                    <h2>{detail[0].name}</h2>
-                    {detail[0].genres.map((genero, i) => {
-                        return (
-                            <Fragment key={i}>
-                                <p>{genero}</p>
-                            </Fragment>
-                        )
-                    })}
-                    {detail[0].description}
-                    <p><span>Fecha de lanzamiento:</span>{` ${detail[0].released}`}</p>
-                    <p><span>Rating:</span>{` ${detail[0].rating}`}</p>
-                    {detail[0].platforms.map((p, i) => {
-                        return (
-                            <Fragment key={i}>
-                                <p>{p}</p>
-                            </Fragment>
-                        )
-                    })}
-                    
-                    
+
+                <div className={styles.game}>
+                    <img className={styles.gameImage} src={detail[0].image} alt='img not found' />
+                    <div className={styles.gameInfo} >
+                        <h2>{detail[0].name}</h2>
+                        <div>
+                            {detail[0].genres.map((genero, i) => {
+                                return (
+                                    <span key={i} >{genero}</span>
+                                )
+                            })}
+                        </div>
+                        <p className={styles.description} >
+                            {detail[0].description}
+                        </p>
+                        <p className={styles.info} ><span>Fecha de lanzamiento:</span>{` ${detail[0].released}`}</p>
+                        <p className={styles.info} ><span>Rating:</span>{` ${detail[0].rating}`}</p>
+                        <div>
+                            {detail[0].platforms.map((p, i) => {
+                                return (
+                                    <span key={i} >{p}</span>
+                                )
+                            })}
+                        </div>
+                    </div>
+
+
                 </div>
-                : <img src={mario} alt="not found"></img>}
+                : <img className={styles.mario} src={mario} alt="not found"></img>}
         </div>
     )
 }

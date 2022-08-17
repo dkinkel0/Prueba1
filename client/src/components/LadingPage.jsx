@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
-import s from './LadingPage.module.css'
+import s from '../styles/LadingPage.module.css'
+
 import palanca from "../assets/videojuego-imagen-animada-0005.gif"
 // assets asi llamar a la carpeta de multimedia
+
 export default function LadingPage(){
 
     return (

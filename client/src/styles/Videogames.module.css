@@ -1,0 +1,34 @@
+
+.gamesGrid{
+    display              : grid;
+    grid-template-columns: repeat(3, minmax(1rem, 1fr));
+    gap                  : 30px;
+    justify-content: center;
+    align-content: center;
+    /* padding: 20px; */
+}
+
+
+.mario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2.5rem;
+    margin-top: 2rem;
+}
+
+
+
+
+.aux_game{
+    display: grid; /* en caudricula */
+    grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+    grid-template-columns: repeat(3, 270px); /* Especifica el tamaño de las columnas y cuántas columnas en un diseño de cuadrícula */
+    /* grid-template-columns: auto auto auto; */
+    /* La gap es una propiedad abreviada para row-gap y las column-gap: gap es espacio entre fila y columnas*/
+    /* grid-template-columns: repeat(3, 1rf); */
+    gap: 40px; 
+    /* padding: 40px; */ /* grueso del contorno que engloba toda la grilla*/
+    justify-content: center; /* alinea dentro cada cuadro eje horizontal */
+    align-content: center; /* alinea dentro cada cuadro eje vertical*/
+}

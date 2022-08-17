@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Paginado.module.css"
+import styles from '../styles/Paginado.module.css'
 
 
 export default function Paginado({ gamesPerPage, N_games, paginado }) {

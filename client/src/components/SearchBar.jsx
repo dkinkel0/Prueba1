@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameGames, deleteGames } from "../actions";
 
-export default function SearchBar () {
+import styles from "../styles/SearchBar.module.css"
+
+export default function SearchBar ({handleSearch}) {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
 
@@ -15,20 +17,22 @@ export default function SearchBar () {
 
     function handleSubmit(e) {
         e.preventDefault(e)
-        dispatch(deleteGames())
+        //dispatch(deleteGames())
         dispatch(getNameGames(name))
+        handleSearch()
         setName("")
+       
     }
 
     return (
-        <div>
-            <input
+        <div className={styles.searchbar}>
+            <input className={styles.searchbar__input}
             type = "text"
-            placeholder= "Buscar..."
+            placeholder= "Buscar juego..."
             value= {name}
             onChange = {(e) => handleInputChange(e)}
             />
-            <button type="submit" onClick={e => handleSubmit(e)}>Buscar</button>
+            <button className={styles.searchbar__button} type="submit" onClick={e => handleSubmit(e)}>Buscar</button>
             
         </div>
     )
