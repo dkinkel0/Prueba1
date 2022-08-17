@@ -25,7 +25,7 @@ const getApiInfo = async () => {
     
     try {
         let gamesApi = [];
-        for (let i = 1; i <=1; i++) {
+        for (let i = 1; i <=5; i++) {
             
             let juegos = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
             gamesApi = [...gamesApi, ...juegos.data.results]
