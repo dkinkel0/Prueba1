@@ -32,15 +32,15 @@ export const validate = (input) => {
     }
     //-- Genereno ------------------------------------------------------------------------------
     if(!input.genres.length){
-        error.genres = 'Debe elegir al menos un Genero'
+        error.genres = 'Elegir al menos un Genero'
     }
     //-- Plataformas ------------------------------------------------------------------------------
     if(!input.platforms.length){
-        error.platforms = 'Debe elegir al menos una Plataforma'
+        error.platforms = 'Elegir al menos una Plataforma'
     }
     //-- Descripcion ------------------------------------------------------------------------------
     if(!input.description.length){
-        error.description = 'Debes ingresar una descripcion'
+        error.description = 'Ingresar una descripcion'
     }else if(input.description.length > 3000){
         let borrar = input.description.length - 3000;
         error.description = `Descripcion muy larga, borre ${borrar} caracteres`

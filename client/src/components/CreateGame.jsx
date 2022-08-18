@@ -45,10 +45,10 @@ export default function CreateActivity() {
     function handleSubmit(e) {
         e.preventDefault();
         if (!input.name || !input.genres.length || !input.platforms.length || !input.description || !input.released || !input.rating) {
-            return alert('Flatan completar campos')
+            return alert('Faltan completar campos')
         }
-        if(games.find( el => el.name.toLowerCase() === input.name.toLowerCase())){
-           return alert('EL nombre ya existe')
+        if (games.find(el => el.name.toLowerCase() === input.name.toLowerCase())) {
+            return alert('EL nombre ya existe')
         }
         dispatch(createGame(input));
 
@@ -56,7 +56,7 @@ export default function CreateActivity() {
 
         // Para volver a la pantalla principal
         history.push('/home')
-        
+
     }
 
     function handleChange(e) { // name, image, description, released
@@ -247,9 +247,13 @@ export default function CreateActivity() {
                     />
                     {error.description && <span className={styles.span3} >{error.description}</span>}
                 </div>
-                
+
                 <div className={styles.btncrear} >
-                    <button className={styles.crearjuego} type='submit' >Crear actividad</button>
+                    <button
+                        className={styles.crearjuego}
+                        type='submit'
+                        disabled = { Object.keys(error).length ? true : false }
+                    >Crear Juego</button>
                 </div>
 
             </form>
